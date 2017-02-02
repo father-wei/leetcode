@@ -19,12 +19,10 @@ object one extends App{
       ["bat"]
     ]
   * */
-  def groupAnagrams(strs: List[String]) : List[List[String]]=  {
-     strs.map(s => (s,  s.sortWith(_<_))) 
-         .groupBy(e => e._2)          
+   def groupAnagrams(strs: List[String]) : List[List[String]]=  {
+     strs.groupBy(e => e.sortWith(_<_))          
          .values
-         .toList
-         .map(ls => ls.map(e => e._1))               
+         .toList      
   }
   
   
