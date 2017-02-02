@@ -26,6 +26,26 @@ object one extends App{
   }
   
   
+     def rotate(arr: Array[Array[Int]]) : Array[Array[Int]] = {
+        swap(arr.reverse)     
+     }
+     
+     def antiRotate(arr: Array[Array[Int]]) : Array[Array[Int]] = {
+        swap(arr.map(x=> x.reverse))     
+     }
+   
+    
+     def swap(arr: Array[Array[Int]]) :  Array[Array[Int]] = {
+       for( x <- 0 to arr.length-1;
+            y <- x + 1 to arr(x).length-1) 
+        {
+            val temp = arr(x)(y)
+            arr(x)(y)  = arr(y)(x)
+            arr(y)(x) = temp
+                    
+        }
+        arr  
+     }
   /*
    * Rotate Image
    * You are given an n x n 2D matrix representing an image.
