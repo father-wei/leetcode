@@ -54,7 +54,33 @@ object one extends App{
   
   
   
- 
+  //Two Sum
+  /*
+   * Given nums = [2, 7, 11, 15], target = 9,
+		 Because nums[0] + nums[1] = 2 + 7 = 9,
+	   return [0, 1].
+   * 
+   */
+  
+   def twoSum(nums: Array[Int], target: Int) : (Int, Int) = {
+     val map = Map[Int, (Int, Int)]()
+     var result = (-1, -1)
+      
+     breakable { 
+       for(index <- 0 to nums.length -1 ) {
+          val value = map.getOrElseUpdate(nums(index), (0, index))
+          val find =  map get (target - nums(index))
+          if(find != None) {
+             result = (find.get._2, index)
+             break
+          }
+       }
+     }
+     result
+   }
+  
+   
+   println(twoSum(Array(2,11,7,15), 9))
   
   
   
