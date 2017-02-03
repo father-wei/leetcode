@@ -82,7 +82,28 @@ object one extends App{
    
    println(twoSum(Array(2,11,7,15), 9))
   
+  /*
+   * Add Two Numbers
+   * Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+		Output: 7 -> 0 -> 8
+   * */
+  def addTwoNumbers( l1: List[Int], l2: List[Int]): List[Int] = {
+     
+    val l = l1.zip(l2)
+      .map(t => t match {case (x, y) => x + y});
+      
+    l.foldLeft((List[Int](), 0))((acc, e) => {
+      if ( e + acc._2  >= 10)  
+        ( (e + acc._2) % 10  :: acc._1, 1)
+      else 
+        ( (e + acc._2) :: acc._1, 0)
+      
+    })._1.reverse
+      
+  }
   
+  
+  println( addTwoNumbers(List(2,4,3), List(5,6,4)) )  
   
   //Tests
   println(pow(2,10))
