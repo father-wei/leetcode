@@ -1,5 +1,9 @@
 package leetcode
 
+import scala.collection.mutable.Map
+import scala.Option
+
+
 object one extends App{
   //implement pow(x, n).
   def pow(x: Int, n :Int) : Int = n match{
@@ -54,8 +58,9 @@ object one extends App{
   
   
   
-  //Two Sum
+ 
   /*
+   * Two Sum
    * Given nums = [2, 7, 11, 15], target = 9,
 		 Because nums[0] + nums[1] = 2 + 7 = 9,
 	   return [0, 1].
@@ -63,24 +68,29 @@ object one extends App{
    */
   
    def twoSum(nums: Array[Int], target: Int) : (Int, Int) = {
-     val map = Map[Int, (Int, Int)]()
-     var result = (-1, -1)
-      
-     breakable { 
-       for(index <- 0 to nums.length -1 ) {
-          val value = map.getOrElseUpdate(nums(index), (0, index))
-          val find =  map get (target - nums(index))
-          if(find != None) {
-             result = (find.get._2, index)
-             break
-          }
-       }
+     
+     val map = Map[Int, Int]()
+     
+     def iterateArr(arr: Array[Int], index:Int): Option[(Int, Int)] = {
+        val value = map getOrElseUpdate (nums(index), index)
+        val find =  map get (target - nums(index))
+        
+        if(index == arr.length){
+           None
+        }
+        
+        if(find != None) {
+           Some ((find.get, index))        
+        }else {
+          iterateArr(arr, index + 1 )
+        }
      }
-     result
+     
+     iterateArr(nums, 0).get
+    
    }
   
    
-   println(twoSum(Array(2,11,7,15), 9))
   
   /*
    * Add Two Numbers
@@ -92,20 +102,20 @@ object one extends App{
     val l = l1.zip(l2)
       .map(t => t match {case (x, y) => x + y});
       
-    l.foldLeft((List[Int](), 0))((acc, e) => {
-      if ( e + acc._2  >= 10)  
-        ( (e + acc._2) % 10  :: acc._1, 1)
-      else 
-        ( (e + acc._2) :: acc._1, 0)
-      
+    l.foldLeft((List[Int](), 0))((acc, e) => e match {
+      case e if ( e + acc._2  >= 10)  => ( (e + acc._2) % 10  :: acc._1, 1)
+      case _                          => ( (e + acc._2) :: acc._1, 0)  
+           
     })._1.reverse
       
   }
   
   
-  println( addTwoNumbers(List(2,4,3), List(5,6,4)) )  
+  
   
   //Tests
+  println(twoSum(Array(2,11,7,15), 17))
+  println( addTwoNumbers(List(2,4,3), List(5,6,4)) )  
   println(pow(2,10))
   println(groupAnagrams(List("eat", "tea", "tan", "ate", "nat", "bat")));
   
