@@ -109,6 +109,34 @@ object one extends App{
     })._1.reverse
       
   }
+	
+
+  //Longest Substring Without Repeating Characters	 
+  def lengthOfLongestSubstring(s: String): Int = {
+    val map = Map[Char, Int]();
+    
+    @tailrec
+    def iterate(current: Int,  max: Int): Int = current match {
+      case e if e == s.length() => max
+      case _ => {
+        val value = map get s(current)         
+        map += (s(current) -> (current + 1))
+        
+        value match {
+          case Some(e) => iterate(current + 1, 
+                                    math.max((current - e + 1), max))
+          case None    => iterate(current + 1, max + 1)
+        }        
+      }       
+    }
+    
+    iterate(0, Integer.MIN_VALUE);
+  }
+  
+  println (lengthOfLongestSubstring("abcabcbb"))
+  println (lengthOfLongestSubstring("bbbbb"))
+  println (lengthOfLongestSubstring("pwwkewaz"))
+	
   
   
   
