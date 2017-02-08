@@ -2,7 +2,7 @@ package leetcode
 
 import scala.collection.mutable.Map
 import scala.Option
-
+import scala.annotation.tailrec
 
 object one extends App{
   //implement pow(x, n).
