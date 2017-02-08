@@ -133,12 +133,64 @@ object one extends App{
     iterate(0, Integer.MIN_VALUE);
   }
   
+	
+	
+	
   println (lengthOfLongestSubstring("abcabcbb"))
   println (lengthOfLongestSubstring("bbbbb"))
   println (lengthOfLongestSubstring("pwwkewaz"))
 	
   
+  //Median of Two Sorted Arrays
+  def findMedianSortedArrays(a : Array[Int], b: Array[Int]) : Int = (a.length, b.length) match{
+    case (sizeA, sizeB) if (sizeA + sizeB) % 2 == 0 => {
+       println("here")
+       val k1 = findKElement(a, 0, sizeA, b, 0, sizeB, (sizeA + sizeB)/2)
+      
+       val k2 = findKElement(a, 0, sizeA, b, 0, sizeB, (sizeA + sizeB)/2 + 1)
+      println("here", k1, k2)
+       (k1 + k2) / 2
+    }
+    case (sizeA, sizeB) if (sizeA + sizeB) % 2 != 0 => {
+       val k1 = findKElement(a, 0, sizeA, b, 0, sizeB, (sizeA + sizeB + 1)/2)
+       k1
+    }
+    
+  }
   
+  @tailrec
+  def findKElement(arr1: Array[Int], startA: Int, endA: Int, arr2:Array[Int], startB: Int, endB: Int, k: Int) : Int =
+    (endA - startA, endB - startB, k) match 
+    {
+      case (0, _, _)  =>  arr2(startB + k - 1)
+      case (_, 0, _)  =>  arr1(startA + k - 1)
+      case (_, _, 1)  => if (arr1(startA) < arr2(startB)) arr1(startA) else arr2(startB)   
+   
+      case (n, m, k) => {
+          val midA = (startA + endA) /2
+          val midB = (startB + endB) /2 
+          
+          if (arr1(midA) <= arr2(midB)) {
+            if (n/2 + m/2 + 1 >= k) {
+              findKElement(arr1, startA, endA, arr2, startB, midB, k)
+            } else {
+              findKElement(arr1, midA + 1, endA, arr2, startB, endB, k - n / 2 - 1)
+            }
+          }
+          else {
+            if (n/2 + m/2 + 1 >= k) {
+              findKElement(arr1, startA, midA, arr2, startB, endB, k)
+            } else {
+              findKElement(arr1, startA, endA, arr2, midB + 1, endB, k - m / 2 - 1)
+            } 
+          }
+      }
+      
+  }
+  
+  
+  
+  println(findMedianSortedArrays(Array(1,3,4), Array(2,5,6)))
   
   
   //Tests
